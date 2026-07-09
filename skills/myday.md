@@ -1,7 +1,7 @@
 ---
 
 name: myday-memory
-description: >
+description:
 A persistent, cross-project daily engineering journal for tracking what the
 user works on, fixes, builds, investigates, learns, struggles with, notices,
 and thinks about throughout each day. Use it to preserve the user's real
