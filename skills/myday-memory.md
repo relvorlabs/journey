@@ -1,7 +1,7 @@
 # name: myday-memory
 
 ------------------------------------------------------------------
-description:
+# description
 A persistent, cross-project daily engineering journal for tracking what the
 user works on, fixes, builds, investigates, learns, struggles with, notices,
 and thinks about throughout each day. Use it to preserve the user's real
@@ -9,7 +9,8 @@ technical journey and later generate grounded LinkedIn posts, X/Twitter
 threads, Instagram content, retrospectives, and portfolio stories.
 ------------------------------------------------------------------
 
-# Instruction: 
+# Instruction
+
 All MyDay journals, project memories, state files, and content-bank updates must be stored exclusively in the designated private GitHub repository provided through `MYDAY_REPO_URL`; do not persist the journal inside any active project repository or permanent local directory. Authenticate using a GitHub token supplied securely at runtime through the `GITHUB_TOKEN` environment variable or the coding agent’s encrypted secret manager, never by placing the token in this prompt, a command, a file, a Git remote URL, terminal output, commit, log, journal entry, or repository configuration. The token should be a fine-grained GitHub personal access token restricted to the single private repository with only the minimum Contents permissions required to read and write files. At the beginning of each session, read the latest repository state using the GitHub API or an ephemeral temporary clone, pull or fetch the newest default branch before making changes, locate or create the current date’s journal, and preserve existing entries written by previous sessions or agents. After every meaningful checkpoint, project switch, completed fix, important discovery, end-of-session update, or day closure, update the appropriate journal and supporting files, review the diff to ensure that no credentials, secrets, private customer data, generated dependencies, unrelated files, or fabricated claims are included, create a focused commit using a message such as `myday: update 2026-07-09 journal` or `myday: close 2026-07-09 journal`, and push it to the repository’s default branch unless `MYDAY_BRANCH` specifies another branch. Before pushing, synchronize with the remote again and safely merge or rebase non-conflicting journal updates so work from another agent is not overwritten; if the same journal section has conflicting edits, preserve both factual entries, organise them chronologically, and never resolve the conflict by deleting undocumented work. Never force-push, rewrite shared history, delete previous journals, expose the repository publicly, change repository visibility, or modify repository settings. If authentication, repository access, synchronization, commit, or push fails, retain the prepared update only in an ephemeral working directory for the duration of the active session, report the exact failure without revealing credentials, and do not falsely claim that the journal was saved remotely. Once the remote commit and push are verified, remove any temporary clone, temporary journal files, cached credentials, and generated authentication configuration so no persistent local copy of the private journal remains.
 
 # MyDay Memory Tracker
