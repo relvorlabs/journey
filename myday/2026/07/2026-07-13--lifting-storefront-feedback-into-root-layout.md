@@ -6,7 +6,7 @@ headline: "Lifting storefront feedback into the Laitstyles root layout"
 projects_touched:
   - laitstyles
 started_at: "2026-07-13T10:25:55+01:00"
-last_updated: "2026-07-13T10:25:55+01:00"
+last_updated: "2026-07-13T11:06:56+01:00"
 closed_at: null
 tags:
   - nextjs
@@ -34,6 +34,31 @@ tags:
 - The storefront specification explicitly says auth should not be reproduced inside `account/page.tsx` and that server-backed Supabase auth remains a separate phase and route boundary.
 
 ## Today's Timeline
+
+### 11:06 — Laitstyles storefront shell consolidation
+
+**Objective**
+
+Consolidate the duplicate public storefront navigation and footer systems into the root storefront shell, excluding admin and authentication-only boundaries. Move bag, saved, account, and theme controls into the canonical root navigation, unify cart state and persistence, and make storefront authentication open as a dialog for shoppers.
+
+**What I found**
+
+- Earlier work today already lifted prototype auth-dialog, hold feedback, and toast state into a root-mounted storefront provider while keeping `layout.tsx` server-first.
+- The new request expands that boundary: one shared public shell, one synchronized bag model, a saved-items sheet, an immediate theme toggle, and a richer auth-aware account control.
+
+**Approach**
+
+- First audit both nav/footer implementations and every existing cart, saved, theme, account, and Supabase auth boundary.
+- Preserve working behaviour from the older cart sheet while routing it through one shared storefront state contract.
+- Keep guest shopping useful with session or cookie-backed persistence, then bridge authenticated behaviour to the real session boundary without presenting prototype state as production persistence.
+
+**Outcome**
+
+- Still investigating.
+
+**Next action**
+
+- Read the active storefront specifications, repository configuration, current Next.js documentation, and live component/state implementations before editing.
 
 ### Morning — Laitstyles root storefront experience boundary
 
