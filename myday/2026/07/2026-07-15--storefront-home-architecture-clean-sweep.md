@@ -6,7 +6,7 @@ headline: "Restructuring the Laitstyles storefront home without changing behavio
 projects_touched:
   - laitstyles
 started_at: "2026-07-15T11:37:43+01:00"
-last_updated: "2026-07-15T11:37:43+01:00"
+last_updated: "2026-07-15T12:46:45+01:00"
 closed_at: null
 tags:
   - nextjs
@@ -79,6 +79,47 @@ Map the current feature tree, dependencies, and oversized React modules before m
 
 - Read the active specifications, Next.js 16 local documentation, package/configuration files, and the live src/features tree.
 
+### 12:46 â€” Retired the redundant `(shop)` route group
+
+**Objective**
+
+Remove the older Prisma-backed `(shop)` route group now that `/products` and `/products/[slug]` are the canonical storefront catalogue and product-detail surfaces.
+
+**What I found**
+
+- The route group owned `/shop`, `/shop/category/[slug]`, and a legacy `/p/[slug]` redirect.
+- Live navigation still pointed at `/shop` and `/p/...`, so deleting only the directory would have left broken internal journeys.
+- Three catalogue filter helpers were consumed only by the deleted `/shop` page.
+
+**Approach**
+
+- Deleted all three route pages and the three orphaned filter-helper modules.
+- Moved legacy URL compatibility into permanent `next.config.ts` redirects: `/shop` to `/products`, `/shop/category/[slug]` to `/products?category=[slug]`, and `/p/[slug]` to `/products/[slug]`.
+- Updated live storefront, cart, checkout, confirmation, collection, footer, header, admin-preview, product-path, and smoke-check links to use `/products` directly.
+- Updated the active storefront phase status to record the decision.
+
+**Work completed**
+
+- The `(shop)` route group no longer contains tracked files.
+- Runtime scans found no `/shop` or `/p/...` navigation outside the deliberate compatibility redirects.
+- Targeted Biome completed with two pre-existing accessibility warnings.
+- Vitest passed 40 files and 162 tests.
+
+**Challenges**
+
+- TypeScript remains blocked by five pre-existing comparison errors in the ongoing storefront refactor.
+- Full lint reports 105 errors and 90 warnings across the already-dirty checkout.
+- Production build stops during Prisma generation with an `EPERM` unlink error before Next.js compilation.
+- React Doctor produced no result before its 120-second timeout.
+
+**Outcome**
+
+- Completed with repository-wide validation blockers recorded honestly.
+
+**Next action**
+
+- Resolve the existing storefront TypeScript errors and Prisma file-lock issue before treating the broader dirty branch as fully green.
+
 ## Projects Touched
 
 ### Laitstyles
@@ -89,20 +130,21 @@ Map the current feature tree, dependencies, and oversized React modules before m
 
 **Progress**
 
-- Audit started; no application files changed yet.
+- Storefront architecture refactor remains in progress; the redundant `(shop)` route group and its orphaned filter helpers have now been retired.
 
 **Current state**
 
-- Existing user edits are present and must be preserved.
+- `/products` is the canonical catalogue route, with permanent redirects preserving old `/shop` and `/p/...` links.
 
 **Open loops**
 
-- Final target architecture, implementation, and validation.
+- Final target architecture, existing TypeScript errors, Prisma build lock, and full validation.
 
 ## Evidence and Proof of Work
 
 - Current branch and dirty worktree inspected before implementation.
 - Skills loaded from the installed controller copies and current repository sources.
+- Route-retirement verification: 40 Vitest files and 162 tests passed; TypeScript, lint, build, and React Doctor blockers are recorded in the 12:46 checkpoint.
 
 ## End-of-Day Reflection
 
