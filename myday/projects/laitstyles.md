@@ -8,7 +8,7 @@
 - Storefront listing pages must read the same repository-backed product truth used by the application; prototype product arrays are visual references only.
 - The Phase 2-3N homepage product card is shared with the catalogue through `src/features/storefront/product-card.tsx`; real catalogue usage selects its typed link variant rather than fake cart or saved-item behavior.
 - The root layout mounts a narrow client `StorefrontExperienceProvider` for prototype auth-dialog access, hold countdown feedback, and storefront toasts across routes. Real Supabase auth routes remain authoritative; the provider must not be described as production authentication or server-backed hold persistence.
-- Application actions use the unmodified shadcn `base-mira` Button primitive. Feature code selects built-in variants and sizes; generic anchor styling must exclude `[data-slot="button"]`, and Button-rendered links must set Base UI `nativeButton={false}`.
+- Application actions use the shadcn `base-mira` Button primitive and one ergonomic shared size scale (32px to 44px). Feature code selects built-in variants and sizes; generic anchor styling must exclude `[data-slot="button"]`, and Button-rendered links must set Base UI `nativeButton={false}`.
 
 ## Source journal
 

@@ -247,3 +247,25 @@ Remove duplicate button styling systems and restore one consistent shadcn Button
 **Outcome**
 
 - The bounded application-wide button and theme cleanup is complete with registry and responsive browser evidence.
+
+### 15:41 — Corrected the shared button size scale
+
+**Objective**
+
+Address the follow-up that many controls still felt too small, thin, wide, or cramped after visual review.
+
+**Work completed**
+
+- Rebalanced the one shared Button size scale: text controls now run from 32px to 44px high and icon controls from 32px to 44px, with consistent horizontal padding and icon gaps.
+- Removed the header brand control's height/padding bypass and restored padding to account quick-action rows.
+- Kept all theme colours, hover states, and semantic variants central rather than adding per-button visual overrides.
+
+**Evidence**
+
+- A live Chromium audit passed across home, account, and Admin in light and dark, including 375x812, 768x1024, and 1280x800 home checks.
+- The audit found no visible Button below 32px, no squeezed content, no poor horizontal padding, and no horizontal page overflow.
+- New screenshots were visually reviewed, including the mobile home CTAs, dark desktop checkout action, and account workspace controls.
+
+**Outcome**
+
+- The size and spacing follow-up is complete; the shared scale now prevents the thin and cramped controls reported in review.
