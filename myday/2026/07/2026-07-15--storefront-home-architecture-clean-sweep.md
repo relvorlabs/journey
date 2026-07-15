@@ -217,3 +217,33 @@ Restore the visible horizontal scrollbar in `ProductRailSection` without disturb
 **Next action**
 
 - Verify the rail visually in a responsive, hydrated browser session and rerun the changed-scope checks when the local tooling is responsive.
+
+### 15:02 — Standardised application buttons across both themes
+
+**Objective**
+
+Remove duplicate button styling systems and restore one consistent shadcn Button contract across storefront, account, and Admin surfaces.
+
+**Work completed**
+
+- Restored `src/components/ui/button.tsx` to the original shadcn `base-mira` registry implementation.
+- Removed duplicate account CVA button styling, legacy storefront button classes, and the app-level foreground guard.
+- Mapped interactive states to the built-in default, outline, secondary, ghost, destructive, and link variants; retained only positioning or composite-content layout at call sites.
+- Fixed Button-rendered links by excluding `[data-slot="button"]` from generic anchor colour inheritance and setting Base UI `nativeButton={false}`.
+- Extended the strict button audit to reject legacy custom button systems.
+
+**Evidence**
+
+- `shadcn diff button`: no updates found.
+- `pnpm audit:buttons`: passed.
+- Real Chromium checks passed in light and dark at 375x812, 768x1024, and 1280x800 with no horizontal overflow or unnamed Buttons; screenshots were visually reviewed.
+
+**Challenges and blockers**
+
+- The first browser run exposed white-on-white checkout text in dark mode; the cause was generic anchor colour inheritance overriding link-rendered Button foregrounds. The semantic anchor boundary fixed it without customising the Button primitive.
+- Full Biome remains red from repository-wide debt. TypeScript, Vitest, build, and React Doctor also timed out or hit the already-recorded boundary/Prisma locks, so none were represented as passing.
+- The Laitstyles working tree contains overlapping pre-existing storefront work, so no broad commit was made that would absorb unrelated changes.
+
+**Outcome**
+
+- The bounded application-wide button and theme cleanup is complete with registry and responsive browser evidence.
