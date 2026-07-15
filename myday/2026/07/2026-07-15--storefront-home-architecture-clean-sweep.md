@@ -1,13 +1,13 @@
 ---
 date: 2026-07-15
 timezone: Africa/Lagos
-status: open
+status: closed
 headline: "Restructuring the Laitstyles storefront home without changing behaviour"
 projects_touched:
   - laitstyles
 started_at: "2026-07-15T11:37:43+01:00"
-last_updated: "2026-07-15T12:46:45+01:00"
-closed_at: null
+last_updated: "2026-07-15T13:58:47+01:00"
+closed_at: "2026-07-15T13:58:47+01:00"
 tags:
   - nextjs
   - react
@@ -149,3 +149,40 @@ Remove the older Prisma-backed `(shop)` route group now that `/products` and `/p
 ## End-of-Day Reflection
 
 This journal remains open while the refactor is in progress.
+
+### Final checkpoint — Storefront home architecture clean sweep
+
+**Objective**
+
+Finish the behaviour-preserving folder and component restructure, then validate it against the live application gates.
+
+**Work completed**
+
+- Replaced the legacy storefront prototype folder with feature-owned `home`, `catalogue`, `product`, `shell`, and `shared` boundaries and updated live imports, scripts, tests, and documentation.
+- Reduced the home parent to section orchestration; split the former monolithic overlay suite into independently loaded modules; split product gallery, purchase panel, mobile buy bar, and detail primitives.
+- Renamed the live wrapper/font contract to `lst-storefront` and `font-storefront-*` while retaining the gated shared stylesheet.
+- Added route-sensitive lazy loading and `next/image` optimisation for the main home, product-card, overlay, and product-detail imagery without changing product behaviour.
+- Converted three raw application buttons found by the strict audit to the shared Button primitive.
+
+**Evidence**
+
+- Direct TypeScript compiler: zero errors.
+- Strict application button audit: passed.
+- Vitest: 40 files and 162 tests passed.
+- Production build: passed; 53 routes generated.
+- React Doctor 0.7.8 changed-file scan: completed with no blocking errors; 64 advisory findings remained across changed and pre-existing files.
+- Browser: homepage accessibility snapshot loaded successfully; 375x812, 768x1024, and 1280x800 screenshots captured with the page structure intact.
+
+**Challenges and blockers**
+
+- Repository-wide Biome lint remains red with 60 errors and 90 warnings from the broader dirty checkout; this was not represented as passing.
+- Search-overlay interaction validation was blocked because the pre-existing dev process became stale after `.next` regeneration and local Node/Playwright process inspection became congested. Unknown user processes were not terminated.
+- A concurrent app-wide route/button/theme migration modified many admin and shop files in the same worktree. Those changes were preserved and excluded from this checkpoint's ownership claims.
+
+**Outcome**
+
+- The requested storefront architecture clean sweep is complete and build-verified. Browser interaction sign-off remains an explicit follow-up gate on a clean local server.
+
+**Next action**
+
+- Restart the local server cleanly, rerun search/drawer open-close checks and product-detail screenshots, then address the repository-wide lint backlog as its own bounded pass.
