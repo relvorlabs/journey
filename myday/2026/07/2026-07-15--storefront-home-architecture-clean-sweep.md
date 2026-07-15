@@ -1,13 +1,13 @@
 ---
 date: 2026-07-15
 timezone: Africa/Lagos
-status: closed
+status: open
 headline: "Restructuring the Laitstyles storefront home without changing behaviour"
 projects_touched:
   - laitstyles
 started_at: "2026-07-15T11:37:43+01:00"
-last_updated: "2026-07-15T13:58:47+01:00"
-closed_at: "2026-07-15T13:58:47+01:00"
+last_updated: "2026-07-15T14:05:12+01:00"
+closed_at: null
 tags:
   - nextjs
   - react
@@ -186,3 +186,34 @@ Finish the behaviour-preserving folder and component restructure, then validate 
 **Next action**
 
 - Restart the local server cleanly, rerun search/drawer open-close checks and product-detail screenshots, then address the repository-wide lint backlog as its own bounded pass.
+
+### 14:05 — Restored the homepage product rail scrollbar
+
+**Objective**
+
+Restore the visible horizontal scrollbar in `ProductRailSection` without disturbing the broader storefront restructure.
+
+**What I found**
+
+- `ProductRailSection` passed both `product-rail` and `no-scrollbar` to the list.
+- The rail stylesheet defined a thin sage scrollbar, but the app-wide WebKit rule set every scrollbar to `display: none`.
+
+**Approach**
+
+- Removed the component-level `no-scrollbar` class.
+- Added `display: block` to `.product-rail::-webkit-scrollbar`, making the rail a narrow exception to the global scrollbar policy and matching the storefront handoff CSS.
+
+**Evidence and blockers**
+
+- Direct source inspection confirmed `className="product-rail"` and the WebKit display override.
+- The two edited storefront files are untracked in the heavily modified worktree, so Git cannot show a conventional diff against `HEAD`.
+- `pnpm exec biome` could not resolve Biome; the direct local Biome command reported existing CSS warnings and Windows access errors while formatting.
+- The full TypeScript check exceeded its two-minute command limit. The local homepage request also timed out, so hydrated browser validation was not claimed.
+
+**Outcome**
+
+- The narrow source fix is complete. Automated and browser validation remain incomplete because of the recorded checkout and tooling blockers.
+
+**Next action**
+
+- Verify the rail visually in a responsive, hydrated browser session and rerun the changed-scope checks when the local tooling is responsive.
